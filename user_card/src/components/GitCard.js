@@ -1,4 +1,5 @@
 import React from 'react';
+import GitUser from './GitUser'
 
 class GitCard extends React.Component {
     componentDidMount() {
@@ -9,9 +10,8 @@ class GitCard extends React.Component {
         console.log("GitCard: Renders DOM");
         return (
             <div>
-                {this.props.user.map(user => (
-                    <GitUser key={user.id} user={user} />
-                ))}
+                <GitUser />
+                )}
             </div>
         )
     }

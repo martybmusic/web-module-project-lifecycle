@@ -2,13 +2,13 @@ import React from 'react';
 
 class GitUser extends React.Component {
     componentDidMount() {
-        console.log(`GitUser: ${this.props.user.name} Mounts`);
+        // console.log(`GitUser: ${this.props.user.name} Mounts`);
     }
     render() {
         const { user } = this.props;
-        console.log(`GitUser: ${this.props.user.name} Renders`);
+        // console.log(`GitUser: ${this.props.user.name} Renders`);
         return (
-            <div key={user.id} className="user">
+            <div className="user">
                 <img src={user.avatar_url} alt={user.login} />
                 <div>
                     <h3>{user.name}</h3>
