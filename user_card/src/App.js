@@ -1,44 +1,44 @@
 import React from 'react';
 import axios from 'axios';
-import GitCard from './components/GitCard'
+import GitUser from './components/GitUser'
 import './App.css';
 
-const getData = (user) => {
-  return axios.get(`https://api.github.com/users/${user}`)
-    .then(res => {
-      return (res.data);
-    });
-}
 
 class App extends React.Component {
   state = {
-    user: [],
-    currentUser: 'martybmusic'
+    user: '',
+    currentUser: 'martybmusic',
+    userData: []
   };
 
-  componentDidMount() {
-    console.log("App: Component Mounts");
-    getData(this.state.currentUser)
-      .then(res => {
-        this.setState({
-          user: res.data
-        });
-      })
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.user !== this.state.user) {
-      if(this.state.user === 'test') {
-        getData('tetondan')
-        .then(res => {
-          this.setState({
-            user: res.data
-          })
-        })
-        .catch(err => console.log(err))
-      }
-    }
+  getData = (user) => {
+    axios.get(`https://api.github.com/users/${user}`)
+      .then(res => this.setState({
+        ...this.state,
+        user: '',
+        userData: res.data}))
   }
+  
+
+componentDidMount(){
+  this.getData(this.state.currentUser)
+};
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if(prevState.user !== this.state.user) {
+  //     if(this.state.user === 'test') {
+  //       getData('tetondan')
+  //       .then(res => {
+  //         this.setState({
+  //           ...this.state,
+  //           user: '',
+  //           userData: res.data
+  //         })
+  //       })
+  //       .catch(err => console.log(err))
+  //     }
+  //   }
+  // }
 
   handleChange = (e) => {
     this.setState({
@@ -48,13 +48,8 @@ class App extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    getData(this.state.user)
-      .then(res => {
-        this.setState({
-          user: res.data
-        })
-      })
-      .catch(err => console.log(err))
+    this.getData(this.state.user)
+
   }
 
 
@@ -62,13 +57,12 @@ class App extends React.Component {
     console.log('App: Renders Dom');
     return (
       <div className="App">
-        <h1>Search GitHub users</h1>
+        <h3>Search GitHub users</h3>
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} type="text"/>
+          <input onChange={this.handleChange} type="text" user={this.state.user}/>
           <button>View</button>
         </form>
-        <GitCard user={this.state.user} />}
-      <h1>Hi</h1>
+        <GitUser userData={this.state.userData} />}
       </div>
     )
   }
