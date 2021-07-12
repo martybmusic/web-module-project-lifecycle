@@ -62,7 +62,9 @@ componentDidMount(){
           <input onChange={this.handleChange} type="text" user={this.state.user}/>
           <button>View</button>
         </form>
-        <GitUser userData={this.state.userData} />}
+        <div className="gitUser">
+          <GitUser userData={this.state.userData} />
+        </div>
       </div>
     )
   }
